@@ -32,7 +32,7 @@ const Cart = () => {
                    </ListGroupItem>
 
                    <div className="d-flex justify-content-center mt-2">
-                   <Button className="m-1">Go To Checkout</Button>
+                   <Button className="m-1" onClick={() => alert(` ${productsCart.length} Products and the total is $ ${TotalPrice}`)}>Go To Checkout</Button>
                    </div>
                </ListGroup>
            </Card.Body>

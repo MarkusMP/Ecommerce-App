@@ -4,7 +4,7 @@ import {Con} from '../../Contexts/Context'
 
 const CartItem = ({ data }) => {
 const [quantity, setQuantity] = useState(1)
-const { UpdateCart, handleDeleteCartItem, handleItemQuantity} = Con()
+const {  handleDeleteCartItem, handleItemQuantity} = Con()
 
 useEffect(() => {
 setQuantity(data.quantity)
@@ -13,7 +13,6 @@ setQuantity(data.quantity)
 function handleOnChange(num) {
 setQuantity(num)
 handleItemQuantity(num, data.id)
-UpdateCart()
 }
 
 

@@ -1,15 +1,18 @@
 import React from 'react'
 import { Container, Navbar, Nav, Button } from 'react-bootstrap'
 import { Con } from '../../Contexts/Context'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import './Header.css'
 
 const Header = () => {
     const { currentUser, logout } = Con()
+    const history = useHistory()
 
     const HandleLogOut = async () => {
         try {
             await logout()
+            history.push('/')
+
         } catch {
             alert("Something went wrong signing out!")
         }

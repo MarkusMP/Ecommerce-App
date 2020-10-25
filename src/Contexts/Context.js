@@ -73,32 +73,15 @@ export function ContextProvider({ children }) {
            } else {
             alert('Item has already been added to cart')
            }
-           setLocalStorage('cartItems', productsCart)
        }
     }
-
-function UpdateCart() {
-    if(currentUser) {
-        db.collection('users').doc(currentUser.uid).collection('CartItems').get().then((querySnapshot) => {
-            const data = []
-            querySnapshot.forEach(function (doc) {
-                data.push(doc.data())
-            });
-            setProductsCart(data)
-        }).catch(function (error) {
-            console.log("Error getting documents: ", error);
-        });
-    } 
-}
 
 function handleDeleteCartItem(id) {
     if(currentUser) {
         db.collection('users').doc(currentUser.uid).collection('CartItems').doc(id).delete()
-        UpdateCart()
     } {
         const newItems = productsCart.filter(products => products.id !== id )  
         setProductsCart(newItems)
-        setLocalStorage('cartItems', newItems)
     }
 }
 
@@ -111,10 +94,10 @@ function handleItemQuantity(quantity, id) {
     } else {
         const newItems = productsCart.map(products => products.id === id ? {...products, quantity: parseInt(quantity)} : products)  
         setProductsCart(newItems)
-        setLocalStorage('cartItems', newItems)
     }
 
 }
+
 
     useEffect(() => {
 
@@ -170,6 +153,14 @@ function handleItemQuantity(quantity, id) {
         });
     }, [])
 
+    useEffect(() => {
+if(currentUser === null) {
+    setLocalStorage('cartItems', productsCart)
+    console.log('1')
+} 
+}, [productsCart])
+
+
     const value = {
         currentUser,
         productsCart,
@@ -177,7 +168,6 @@ function handleItemQuantity(quantity, id) {
         signup,
         login,
         handleAddToCart,
-        UpdateCart,
         handleDeleteCartItem,
         handleItemQuantity,
         products
